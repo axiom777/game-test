@@ -1,9 +1,21 @@
-export default function Home() {
-  return <></>;
+import { useDispatch, useSelector } from "react-redux";
+import { wrapper } from "../redux/store";
+import { setKey, setCatalog } from "../redux/actions/catalog";
+
+function Home(props) {
+  const store = useSelector((store) => store.catalog);
+
+  return (
+    <>
+    </>
+  );
 }
 
-export async function getStaticProps() {
-  const api_key = process.env.API_KEY ?? null;
-  !api_key && console.error("No API_KEY in enviroment");
-  return { props: { api_key } };
-}
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+  store.dispatch(setKey(process.env.API_KEY));
+  await store.dispatch(setCatalog());
+  const catalog = store.getState();
+  return { props: { catalog } };
+});
+
+export default Home;

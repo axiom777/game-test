@@ -1,0 +1,14 @@
+export const SET_KEY = "SET_KEY";
+
+export const SET_CATALOG = "SET_CATALOG";
+export const CHANGE_PAGE = "CHANGE_PAGE";
+
+export const TOGGLE_NAME_SORT = "TOGGLE_NAME_SORT";
+export const TOGGLE_REALISE_SORT = "TOGGLE_REALISE_SORT";
+
+export const RESET_REALISE_SORT = "RESET_REALISE_SORT";
+export const RESET_NAME_SORT = "RESET_NAME_SORT";
+
+export const ADD_PLATFORM = "ADD_PLATFORM";
+export const REMOVE_PLATFORM = "REMOVE_PLATFORM";
+export const RESET_PLATFORM = "RESET_PLATFORM";
