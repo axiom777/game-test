@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { wrapper } from "../redux/store";
-import { setKey, setCatalog } from "../redux/actions/catalog";
+import { setCatalog } from "../redux/actions/catalog";
+import { setKey,setIsMobile } from "../redux/actions/config";
 import Layout from "../components/Layout/Layout";
 
 function Home() {
@@ -15,11 +16,16 @@ function Home() {
   );
 }
 
-export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-  store.dispatch(setKey(process.env.API_KEY));
-  await store.dispatch(setCatalog());
-  const catalog = store.getState();
-  return { props: { catalog } };
-});
+Home.getInitialProps = wrapper.getInitialPageProps(
+  (store) => async ({ req }) => {
+    const isMobile = req.headers["user-agent"].match(
+      /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+    );
+    store.dispatch(setKey(process.env.API_KEY));
+    store.dispatch(setIsMobile(isMobile))
+    await store.dispatch(setCatalog());
+    return {};
+  }
+);
 
 export default Home;

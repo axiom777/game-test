@@ -1,4 +1,5 @@
 export const SET_KEY = "SET_KEY";
+export const SET_IS_MOBILE = "SET_IS_MOBILE";
 
 export const SET_CATALOG = "SET_CATALOG";
 export const CHANGE_PAGE = "CHANGE_PAGE";

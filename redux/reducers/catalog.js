@@ -1,7 +1,6 @@
 import * as t from "../types";
 
 const initialState = {
-  key: null,
   data: null,
   games: null,
 
@@ -13,8 +12,6 @@ const initialState = {
 
 export const catalog = (state = initialState, action) => {
   switch (action.type) {
-    case t.SET_KEY:
-      return { ...state, key: action.key };
     case t.SET_CATALOG:
       return {
         ...state,

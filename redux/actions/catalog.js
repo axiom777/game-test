@@ -2,13 +2,9 @@ import * as t from "../types";
 
 const URL = "https://api.rawg.io/api/";
 
-export const setKey = (key) => (dispatch) => {
-  dispatch({ type: t.SET_KEY, key });
-};
-
 export const setCatalog = () => async (dispatch, getState) => {
   const params = [];
-  const { key } = getState().catalog;
+  const { key } = getState().config;
   params.push(`key=${key}`);
 
   const url = `${URL}games?${params.join("&")}`;
