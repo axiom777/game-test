@@ -4,6 +4,10 @@ export const SET_IS_MOBILE = "SET_IS_MOBILE";
 export const SET_CATALOG = "SET_CATALOG";
 export const CHANGE_PAGE = "CHANGE_PAGE";
 
+export const SET_IS_LOADING = "SET_IS_LOADING";
+
+export const ADD_GAMES = "ADD_GAMES";
+
 export const TOGGLE_NAME_SORT = "TOGGLE_NAME_SORT";
 export const TOGGLE_REALISE_SORT = "TOGGLE_REALISE_SORT";
 
