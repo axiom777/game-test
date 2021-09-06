@@ -11,12 +11,28 @@ export const Game = ({ game }) => {
     screenshots,
     background_image,
   } = game;
+
   return (
     <Wrapper>
       <ImageWrapper>
         <Image src={background_image} layout="fill" alt={name} />
       </ImageWrapper>
       <Gallery screenshots={{ ...screenshots, background_image }} />
+      <h1>{name}</h1>
+      <Content>
+        <Description dangerouslySetInnerHTML={{ __html: description }} />
+        <Info>
+          <InfoItem>Rating: {rating}</InfoItem>
+          <InfoItem>
+            Platforms:
+            <Info>
+              {platforms.map(({ platform }) => (
+                <InfoItem key={platform.id}>{platform.name}</InfoItem>
+              ))}
+            </Info>
+          </InfoItem>
+        </Info>
+      </Content>
     </Wrapper>
   );
 };
@@ -55,3 +71,22 @@ const ImageWrapper = styled.div`
     );
   }
 `;
+
+const Content = styled.div`
+  box-sizing: border-box;
+  padding: 20px;
+  background: ${(p) => hexToRGBA(p.theme.bg_card, 0.8)};
+`;
+const Description = styled.div``;
+
+const Info = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  & >li >ul {
+    padding: 0 30px;
+    list-style-type:circle;
+
+  }
+`;
+const InfoItem = styled.li``;
