@@ -2,6 +2,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import { hexToRGBA } from "../../utils/hexToRGBA";
 import { Gallery } from "../Gallery/Gallery";
+
 export const Game = ({ game }) => {
   const {
     name,
@@ -18,7 +19,7 @@ export const Game = ({ game }) => {
         <Image src={background_image} layout="fill" alt={name} />
       </ImageWrapper>
       <Gallery screenshots={{ ...screenshots, background_image }} />
-      <h1>{name}</h1>
+      <H1>{name}</H1>
       <Content>
         <Description dangerouslySetInnerHTML={{ __html: description }} />
         <Info>
@@ -71,10 +72,15 @@ const ImageWrapper = styled.div`
     );
   }
 `;
+const H1 = styled.h1`
+  padding-left: 20px;
+
+`
 
 const Content = styled.div`
   box-sizing: border-box;
   padding: 20px;
+  margin-bottom: 20px;
   background: ${(p) => hexToRGBA(p.theme.bg_card, 0.8)};
 `;
 const Description = styled.div``;
