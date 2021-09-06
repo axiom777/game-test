@@ -5,6 +5,7 @@ import PageNotFound from "../404";
 import { setIsMobile } from "../../redux/actions/config";
 import { getGame } from "../../utils/getGame";
 import { useRouter } from "next/router";
+import { Game } from '../../components/Game/Game';
 
 function GamePage(props) {
   const [game, setGame] = useState(props.game);
@@ -28,7 +29,7 @@ function GamePage(props) {
   if (game?.error) return <PageNotFound message={game.error} />;
   return (
     <Layout>
-      {!game ? <>Loading...</> : <pre>{JSON.stringify(game, null, 2)}</pre>}
+      {!game ? <>Loading...</> : <Game game={game}/>}
     </Layout>
   );
 }
