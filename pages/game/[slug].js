@@ -6,7 +6,7 @@ import { setIsMobile } from "../../redux/actions/config";
 import { getGame } from "../../utils/getGame";
 import { useRouter } from "next/router";
 
-function Game(props) {
+function GamePage(props) {
   const [game, setGame] = useState(props.game);
   const router = useRouter();
 
@@ -22,7 +22,7 @@ function Game(props) {
         }
       })();
     }
-  }, [game,router.query.slug]);
+  }, [game, router.query.slug]);
 
   if (props.error) return <PageNotFound message={props.error} />;
   if (game?.error) return <PageNotFound message={game.error} />;
@@ -33,7 +33,7 @@ function Game(props) {
   );
 }
 
-Game.getInitialProps = wrapper.getInitialPageProps(
+GamePage.getInitialProps = wrapper.getInitialPageProps(
   (store) => async ({ req, query, res }) => {
     if (!req) return {};
     const isMobile = req.headers["user-agent"].match(
@@ -51,4 +51,4 @@ Game.getInitialProps = wrapper.getInitialPageProps(
     }
   }
 );
-export default Game;
+export default GamePage;
