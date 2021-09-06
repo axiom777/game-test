@@ -31,7 +31,9 @@ const ImageWrapper = styled.div`
   top: 0;
   left: 0;
   z-index: -2;
-  width: 100vw;
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
   height: 100vh;
   & img {
     object-fit: cover;
