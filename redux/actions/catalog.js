@@ -2,9 +2,14 @@ import * as t from "../types";
 
 const URL = "http://localhost:3000/api/games";
 
-export const setCatalog = () => async (dispatch) => {
+export const setCatalog = () => async (dispatch, getState) => {
+  const { nameSort, releaseDateSort } = getState().catalog;
   const params = [];
+  if (nameSort !== null) params.push(`ordering=${!nameSort ? "-" : ""}name`);
+  if (releaseDateSort !== null)
+    params.push(`ordering=${!releaseDateSort ? "-" : ""}released`);
   const url = `${URL}?${params.join("&")}`;
+  console.log(url);
 
   try {
     const response = await fetch(url);
@@ -21,7 +26,6 @@ export const getNewPage = () => async (dispatch, getState) => {
   if (isLoading && !curNext) return;
   dispatch(setIsLoading(true));
   try {
-    console.log(isLoading, oldGames, curNext);
     const response = await fetch(curNext);
     const json = await response.json();
     const { games: newGames, next } = json;
@@ -45,6 +49,7 @@ export const sortToggle = () => (dispatch, getState) => {
   if (nameSort === false)
     dispatch({ type: t.TOGGLE_NAME_SORT, nameSort: null });
   dispatch({ type: t.RESET_RELEASE_SORT });
+  dispatch(setCatalog());
 };
 
 export const releaseToggle = () => (dispatch, getState) => {
@@ -56,4 +61,5 @@ export const releaseToggle = () => (dispatch, getState) => {
   if (rds === false)
     dispatch({ type: t.TOGGLE_RELEASE_SORT, releaseDateSort: null });
   dispatch({ type: t.RESET_NAME_SORT });
+  dispatch(setCatalog());
 };

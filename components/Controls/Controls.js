@@ -8,7 +8,7 @@ export const Controls = () => {
   const { nameSort, releaseDateSort, platformsSort } = useSelector(
     (store) => store.catalog
   );
-  console.log(nameSort, releaseDateSort, platformsSort);
+  //console.log(nameSort, releaseDateSort, platformsSort);
   return (
     <Wrapper>
       <Button

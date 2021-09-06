@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import Image from "next/image";
@@ -7,8 +7,15 @@ import { useRouter } from "next/router";
 export const Card = (props) => {
   const { data, isMobile } = props;
   const { slug, name, released, background_image, platforms, rating } = data;
+  const [width, setWidth] = useState();
   const [isHovered, setHovered] = useState(false);
   const router = useRouter();
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    const width = imageRef.current.clientWidth;
+    setWidth(width);
+  }, [imageRef]);
 
   const imageProps = {
     width: 600,
@@ -17,20 +24,25 @@ export const Card = (props) => {
   const url = "/game/[slug]";
   const as = `/game/${slug}`;
 
-  const image = background_image.replace(
-    "media/",
-    `media/crop/${imageProps.width}/${imageProps.height}/`
-  );
+  const image =
+    background_image &&
+    background_image.replace(
+      "media/",
+      `media/crop/${imageProps.width}/${imageProps.height}/`
+    );
 
   return (
     <Wrapper
+      ref={imageRef}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       isHovered={isHovered}
       onClick={() => router.push(url, as)}
     >
-      <ImageWrapper>
-        <Image src={image} alt={name} {...imageProps} layout="responsive" />
+      <ImageWrapper width={width}>
+        {background_image && (
+          <Image src={image} alt={name} {...imageProps} layout="responsive" />
+        )}
       </ImageWrapper>
       <Content>
         <Name>
@@ -64,6 +76,8 @@ const Wrapper = styled.div`
   cursor: pointer;
   border-radius: ${(props) => props.theme.border_radius};
   transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
 
   @media(min-width: 600px){
     max-width: calc(-20px + 100% / 2);
@@ -82,6 +96,7 @@ const Wrapper = styled.div`
 `;
 
 const ImageWrapper = styled.div`
+  height: calc(${(p) => p.width}px / 1.5);
   overflow: hidden;
   border-top-left-radius: ${(props) => props.theme.border_radius};
   border-top-right-radius: ${(props) => props.theme.border_radius};
@@ -89,6 +104,7 @@ const ImageWrapper = styled.div`
 
 const Content = styled.div`
   padding: 10px;
+  margin-top: auto;
 `;
 
 const Name = styled.h2`
