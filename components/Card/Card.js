@@ -2,16 +2,20 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export const Card = (props) => {
   const { data, isMobile } = props;
   const { slug, name, released, background_image, platforms, rating } = data;
   const [isHovered, setHovered] = useState(false);
+  const router = useRouter();
 
   const imageProps = {
     width: 600,
     height: 400,
   };
+  const url = "/game/[slug]";
+  const as = `/game/${slug}`;
 
   const image = background_image.replace(
     "media/",
@@ -23,13 +27,14 @@ export const Card = (props) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       isHovered={isHovered}
+      onClick={() => router.push(url, as)}
     >
       <ImageWrapper>
         <Image src={image} alt={name} {...imageProps} layout="responsive" />
       </ImageWrapper>
       <Content>
         <Name>
-          <Link href={"/game/[slug]"} as={`/game/${slug}`}>
+          <Link href={url} as={as}>
             <a>{name}</a>
           </Link>
         </Name>
