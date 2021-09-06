@@ -17,7 +17,7 @@ export const setCatalog = () => async (dispatch) => {
 };
 
 export const getNewPage = () => async (dispatch, getState) => {
-  const { isLoading, games: oldGames, next:curNext } = getState().catalog;
+  const { isLoading, games: oldGames, next: curNext } = getState().catalog;
   if (isLoading && !curNext) return;
   dispatch(setIsLoading(true));
   try {
@@ -35,4 +35,25 @@ export const getNewPage = () => async (dispatch, getState) => {
 
 export const setIsLoading = (isLoading) => (dispatch) => {
   dispatch({ type: t.SET_IS_LOADING, isLoading });
+};
+
+export const sortToggle = () => (dispatch, getState) => {
+  const { nameSort } = getState().catalog;
+  if (nameSort === null) dispatch({ type: t.TOGGLE_NAME_SORT, nameSort: true });
+  if (nameSort === true)
+    dispatch({ type: t.TOGGLE_NAME_SORT, nameSort: false });
+  if (nameSort === false)
+    dispatch({ type: t.TOGGLE_NAME_SORT, nameSort: null });
+  dispatch({ type: t.RESET_RELEASE_SORT });
+};
+
+export const releaseToggle = () => (dispatch, getState) => {
+  const { releaseDateSort: rds } = getState().catalog;
+  if (rds === null)
+    dispatch({ type: t.TOGGLE_RELEASE_SORT, releaseDateSort: true });
+  if (rds === true)
+    dispatch({ type: t.TOGGLE_RELEASE_SORT, releaseDateSort: false });
+  if (rds === false)
+    dispatch({ type: t.TOGGLE_RELEASE_SORT, releaseDateSort: null });
+  dispatch({ type: t.RESET_NAME_SORT });
 };

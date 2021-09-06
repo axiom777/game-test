@@ -8,7 +8,7 @@ const initialState = {
 
   //ordering
   nameSort: null,
-  realiseDateSort: null,
+  releaseDateSort: null,
   platformsSort: [],
 };
 
@@ -31,6 +31,18 @@ export const catalog = (state = initialState, action) => {
         games: action.games,
         next: action.next,
       };
+
+    case t.TOGGLE_NAME_SORT:
+      return { ...state, nameSort: action.nameSort };
+
+    case t.RESET_NAME_SORT:
+      return { ...state, nameSort: null };
+
+    case t.TOGGLE_RELEASE_SORT:
+      return { ...state, releaseDateSort: action.releaseDateSort };
+
+    case t.RESET_RELEASE_SORT:
+      return { ...state, releaseDateSort: null };
 
     default:
       return { ...state };
