@@ -5,6 +5,7 @@ import { setCatalog } from "../redux/actions/catalog";
 import { setIsMobile } from "../redux/actions/config";
 import Layout from "../components/Layout/Layout";
 import { Catalog } from "../components/Catalog/Catalog";
+import { Controls } from "../components/Controls/Controls";
 
 function Home() {
   const dispatch = useDispatch();
@@ -17,7 +18,10 @@ function Home() {
   }, [dispatch, games]);
 
   return (
-    <Layout title={seo_title}>{!games ? "Loading..." : <Catalog />}</Layout>
+    <Layout title={seo_title}>
+      <Controls />
+      {!games ? "Loading..." : <Catalog />}
+    </Layout>
   );
 }
 
