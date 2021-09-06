@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import Image from "next/image";
 
@@ -27,7 +28,11 @@ export const Card = (props) => {
         <Image src={image} alt={name} {...imageProps} layout="responsive" />
       </ImageWrapper>
       <Content>
-        <Name>{name}</Name>
+        <Name>
+          <Link href={"/game/[slug]"} as={`/game/${slug}`}>
+            <a>{name}</a>
+          </Link>
+        </Name>
         {(isHovered || isMobile) && (
           <Details isMobile={isMobile}>
             <Detail>
@@ -84,12 +89,19 @@ const Content = styled.div`
 const Name = styled.h2`
   padding: 10px;
   margin: 0;
+  & > a {
+    color: ${(p) => p.theme.color_page};
+    text-decoration: none;
+  }
 `;
 
 const Details = styled.ul`
   margin: 0;
   padding: 10px 20px;
-  ${props=>props.isMobile ?'position: relative;':`
+  ${(props) =>
+    props.isMobile
+      ? "position: relative;"
+      : `
   position: absolute;
   top: 100%;
   left: 0;

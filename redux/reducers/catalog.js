@@ -1,9 +1,10 @@
 import * as t from "../types";
 
 const initialState = {
-  data: null,
   games: null,
   isLoading: false,
+  next: null,
+  seo_title: "",
 
   //ordering
   nameSort: null,
@@ -16,8 +17,9 @@ export const catalog = (state = initialState, action) => {
     case t.SET_CATALOG:
       return {
         ...state,
-        data: action.json,
-        games: action.results,
+        games: action.games,
+        next: action.next,
+        seo_title: action.seo_title,
       };
 
     case t.SET_IS_LOADING:
@@ -26,8 +28,8 @@ export const catalog = (state = initialState, action) => {
     case t.ADD_GAMES:
       return {
         ...state,
-        data: action.json,
         games: action.games,
+        next: action.next,
       };
 
     default:
