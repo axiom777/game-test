@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styled from "styled-components";
 import { hexToRGBA } from "../../utils/hexToRGBA";
 import { Gallery } from "../Gallery/Gallery";
@@ -15,6 +16,12 @@ export const Game = ({ game }) => {
 
   return (
     <Wrapper>
+      <Bread>
+        <Link href={"/"}>
+          <a>Главная</a>
+        </Link>
+        <span> {">"} {name}</span>
+      </Bread>
       <ImageWrapper>
         {background_image && (
           <Image src={background_image} layout="fill" alt={name} />
@@ -101,3 +108,17 @@ const Info = styled.ul`
   }
 `;
 const InfoItem = styled.li``;
+
+const Bread = styled.div`
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: ${(p) => hexToRGBA(p.theme.color_page, 0.8)};
+  & > a {
+    text-decoration: none;
+    color: inherit;
+    &:hover {
+      color: ${(p) => p.theme.color_page};
+    }
+  }
+`;
