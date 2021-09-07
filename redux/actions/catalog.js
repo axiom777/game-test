@@ -3,19 +3,26 @@ import * as t from "../types";
 const URL = "http://localhost:3000/api/games";
 
 export const setCatalog = () => async (dispatch, getState) => {
-  const { nameSort, releaseDateSort } = getState().catalog;
+  const { nameSort, releaseDateSort, platformsSort } = getState().catalog;
+  const platforms = Object.keys(platformsSort).reduce((acc, key) => {
+    platformsSort[key].active && acc.push(key);
+    return acc;
+  }, []);
   const params = [];
   if (nameSort !== null) params.push(`ordering=${!nameSort ? "-" : ""}name`);
   if (releaseDateSort !== null)
     params.push(`ordering=${!releaseDateSort ? "-" : ""}released`);
+  platforms.length > 0 && params.push(`platforms=${platforms.join(",")}`);
+
   const url = `${URL}?${params.join("&")}`;
-  console.log(url);
 
   try {
+    dispatch(setIsLoading(true));
     const response = await fetch(url);
     const json = await response.json();
     const { games, seo_title, next } = json;
     dispatch({ type: t.SET_CATALOG, games, seo_title, next });
+    dispatch(setIsLoading(false));
   } catch (e) {
     console.error(e);
   }
@@ -61,5 +68,13 @@ export const releaseToggle = () => (dispatch, getState) => {
   if (rds === false)
     dispatch({ type: t.TOGGLE_RELEASE_SORT, releaseDateSort: null });
   dispatch({ type: t.RESET_NAME_SORT });
+  dispatch(setCatalog());
+};
+
+export const platformsToggle = (key) => (dispatch, getState) => {
+  const { platformsSort: oldPlatformsSort } = getState().catalog;
+  const platformsSort = { ...oldPlatformsSort };
+  platformsSort[key].active = !platformsSort[key].active;
+  dispatch({ type: t.CHANGE_PLATFORM, platformsSort });
   dispatch(setCatalog());
 };

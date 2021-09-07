@@ -2,10 +2,11 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { hexToRGBA } from "../../utils/hexToRGBA";
 import { sortToggle, releaseToggle } from "../../redux/actions/catalog";
+import { PlatformsSort } from '../PlatformsSort/PlatformsSort';
 
 export const Controls = () => {
   const dispatch = useDispatch();
-  const { nameSort, releaseDateSort, platformsSort } = useSelector(
+  const { nameSort, releaseDateSort, platformsSort, isLoading } = useSelector(
     (store) => store.catalog
   );
   //console.log(nameSort, releaseDateSort, platformsSort);
@@ -16,6 +17,7 @@ export const Controls = () => {
         sort={nameSort}
         width="70px"
         onClick={() => dispatch(sortToggle())}
+        disabled={isLoading}
       >
         Name
       </Button>
@@ -24,9 +26,11 @@ export const Controls = () => {
         sort={releaseDateSort}
         width="75px"
         onClick={() => dispatch(releaseToggle())}
+        disabled={isLoading}
       >
         Release
       </Button>
+      <PlatformsSort/>
     </Wrapper>
   );
 };
@@ -39,6 +43,7 @@ const Wrapper = styled.div`
   background: ${(p) => p.theme.bg_card};
   box-shadow: 0 0 10px ${(p) => hexToRGBA(p.theme.color_page, 0.2)};
 `;
+
 const Button = styled.button`
   display: flex;
   outline: none;
@@ -52,6 +57,7 @@ const Button = styled.button`
   border: 1px solid
     ${(p) =>
       p.isActive ? p.theme.color_page : hexToRGBA(p.theme.color_page, 0.5)};
+  cursor: pointer;
 
   &:after {
     content: "${(p) => (p.sort === null ? "" : p.sort === true ? "↑" : "↓")}";

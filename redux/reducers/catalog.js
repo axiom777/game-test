@@ -9,7 +9,14 @@ const initialState = {
   //ordering
   nameSort: null,
   releaseDateSort: null,
-  platformsSort: [],
+  platformsSort: {
+    4: { name: "PC", active: false },
+    1: { name: "Xbox One", active: false },
+    14: { name: "Xbox 360", active: false },
+    18: { name: "PlayStation 4", active: false },
+    187: { name: "PlayStation 5", active: false },
+    186: { name: "Xbox Series S/X", active: false },
+  },
 };
 
 export const catalog = (state = initialState, action) => {
@@ -43,6 +50,9 @@ export const catalog = (state = initialState, action) => {
 
     case t.RESET_RELEASE_SORT:
       return { ...state, releaseDateSort: null };
+
+    case t.CHANGE_PLATFORM:
+      return { ...state, platformsSort: action.platformsSort };
 
     default:
       return { ...state };
