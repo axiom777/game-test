@@ -9,6 +9,7 @@ const initialState = {
   //ordering
   nameSort: null,
   releaseDateSort: null,
+  searchQuery: "",
   platformsSort: {
     4: { name: "PC", active: false },
     1: { name: "Xbox One", active: false },
@@ -53,6 +54,9 @@ export const catalog = (state = initialState, action) => {
 
     case t.CHANGE_PLATFORM:
       return { ...state, platformsSort: action.platformsSort };
+
+    case t.SET_SEARCH_QUERY:
+      return { ...state, searchQuery: action.searchQuery };
 
     default:
       return { ...state };

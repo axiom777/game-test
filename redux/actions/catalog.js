@@ -3,18 +3,26 @@ import * as t from "../types";
 const URL = "http://localhost:3000/api/games";
 
 export const setCatalog = () => async (dispatch, getState) => {
-  const { nameSort, releaseDateSort, platformsSort } = getState().catalog;
+  const {
+    nameSort,
+    releaseDateSort,
+    platformsSort,
+    searchQuery,
+  } = getState().catalog;
   const platforms = Object.keys(platformsSort).reduce((acc, key) => {
     platformsSort[key].active && acc.push(key);
     return acc;
   }, []);
   const params = [];
   if (nameSort !== null) params.push(`ordering=${!nameSort ? "-" : ""}name`);
+
   if (releaseDateSort !== null)
     params.push(`ordering=${!releaseDateSort ? "-" : ""}released`);
   platforms.length > 0 && params.push(`platforms=${platforms.join(",")}`);
 
+  if (searchQuery.length > 0) params.push(`search=${searchQuery}`);
   const url = `${URL}?${params.join("&")}`;
+  console.log(url)
 
   try {
     dispatch(setIsLoading(true));
@@ -77,4 +85,12 @@ export const platformsToggle = (key) => (dispatch, getState) => {
   platformsSort[key].active = !platformsSort[key].active;
   dispatch({ type: t.CHANGE_PLATFORM, platformsSort });
   dispatch(setCatalog());
+};
+
+export const search = (value) => (dispatch, getState) => {
+  const { searchQuery } = getState().catalog;
+  if (searchQuery !== value) {
+    dispatch({ type: t.SET_SEARCH_QUERY, searchQuery: value });
+    dispatch(setCatalog());
+  }
 };

@@ -29,7 +29,8 @@ export const Catalog = () => {
           isMobile={isMobile}
         />
       ))}
-      {!!next && (
+      {games.length === 0 && <h2>No Games Found</h2>}
+      {!!next && games.length > 19 && (
         <IntersectionBlock
           ref={inViewRef}
           disabled={isLoading}

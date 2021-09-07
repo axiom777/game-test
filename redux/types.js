@@ -1,4 +1,3 @@
-export const SET_KEY = "SET_KEY";
 export const SET_IS_MOBILE = "SET_IS_MOBILE";
 
 export const SET_CATALOG = "SET_CATALOG";
@@ -16,3 +15,5 @@ export const RESET_NAME_SORT = "RESET_NAME_SORT";
 
 export const CHANGE_PLATFORM = "CHANGE_PLATFORM"
 export const RESET_PLATFORMS = "RESET_PLATFORMS";
+
+export const SET_SEARCH_QUERY = "SET_SEARCH_QUERY"

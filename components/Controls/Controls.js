@@ -2,7 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { hexToRGBA } from "../../utils/hexToRGBA";
 import { sortToggle, releaseToggle } from "../../redux/actions/catalog";
-import { PlatformsSort } from '../PlatformsSort/PlatformsSort';
+import { PlatformsSort } from "../PlatformsSort/PlatformsSort";
+import { Search } from "../Search/Search";
 
 export const Controls = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,8 @@ export const Controls = () => {
       >
         Release
       </Button>
-      <PlatformsSort/>
+      <PlatformsSort />
+      <Search />
     </Wrapper>
   );
 };
