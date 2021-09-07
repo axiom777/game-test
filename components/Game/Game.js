@@ -20,7 +20,10 @@ export const Game = ({ game }) => {
         <Link href={"/"}>
           <a>Главная</a>
         </Link>
-        <span> {">"} {name}</span>
+        <span>
+          {" "}
+          {">"} {name}
+        </span>
       </Bread>
       <ImageWrapper>
         {background_image && (
